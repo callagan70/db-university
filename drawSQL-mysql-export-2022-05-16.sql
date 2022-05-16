@@ -54,6 +54,22 @@ CREATE TABLE `Nazionalità`(
     `Francia` CHAR(255) NOT NULL,
     `Spagna` CHAR(255) NOT NULL
 );
+CREATE TABLE `Ruolo`(
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `Contabile` TINYINT(1) NULL,
+    `Docente` TINYINT(1) NULL,
+    `Pulizie` TINYINT(1) NULL,
+    `Elettricista` TINYINT(1) NOT NULL,
+    `Idraulico` TINYINT(1) NOT NULL,
+    `Informatico` TINYINT(1) NOT NULL
+);
+CREATE TABLE `Data Esami`(
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `Data` DATE NOT NULL,
+    `Presenza` TINYINT(1) NOT NULL,
+    `Voto` TINYINT NOT NULL,
+    `Passato_O_No` TINYINT(1) NOT NULL
+);
 ALTER TABLE
     `Università de La Laguna` ADD CONSTRAINT `università de la laguna_impiegati_foreign` FOREIGN KEY(`Impiegati`) REFERENCES `Data Impiegati`(`id`);
 ALTER TABLE
@@ -63,6 +79,12 @@ ALTER TABLE
 ALTER TABLE
     `Dipartimanti` ADD CONSTRAINT `dipartimanti_nome_dipartimento_foreign` FOREIGN KEY(`Nome_Dipartimento`) REFERENCES `Corsi di laurea`(`id`);
 ALTER TABLE
+    `Corsi di laurea` ADD CONSTRAINT `corsi di laurea_appelli_foreign` FOREIGN KEY(`Appelli`) REFERENCES `Data Esami`(`id`);
+ALTER TABLE
     `Data Impiegati` ADD CONSTRAINT `data impiegati_nazionalità_foreign` FOREIGN KEY(`Nazionalità`) REFERENCES `Nazionalità`(`id`);
 ALTER TABLE
+    `Data Impiegati` ADD CONSTRAINT `data impiegati_ruolo_foreign` FOREIGN KEY(`Ruolo`) REFERENCES `Ruolo`(`id`);
+ALTER TABLE
     `Data Studenti` ADD CONSTRAINT `data studenti_nazionalità_foreign` FOREIGN KEY(`Nazionalità`) REFERENCES `Nazionalità`(`id`);
+ALTER TABLE
+    `Data Studenti` ADD CONSTRAINT `data studenti_pagella_foreign` FOREIGN KEY(`Pagella`) REFERENCES `Data Esami`(`id`);
